@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Voters' Service Portal - Special Intensive Revision (SIR)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .input-focus:focus-within {
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+        }
+        @keyframes scaleUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-scale-up {
+            animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-800">
+
+    <!-- Top Gov Tricolor Bar -->
+    <div class="h-1.5 w-full bg-gradient-to-r from-orange-500 via-white to-emerald-600"></div>
+
+    <!-- Official Header with Logos -->
+    <header class="w-full bg-white border-b border-slate-200">
+        <div class="max-w-4xl mx-auto flex justify-between items-center px-4 py-3">
+            <div class="flex items-center space-x-3">
+                <a href="buriya.html" target="_blank" class="block">
+                    <img src="https://i.ibb.co/dsJC52TB/logo-png-b686afb9ac69b2a1342bd76217456b81.png" alt="Emblem of India" class="h-10 sm:h-12 w-auto object-contain">
+                </a>
+                <div class="border-l border-slate-300 pl-3 hidden sm:block">
+                    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-700">Election Commission of India</p>
+                    <p class="text-[10px] text-slate-500">भारत निर्वाचन आयोग</p>
+                </div>
+            </div>
+            <div>
+                <a href="buriya.html" target="_blank" class="block">
+                    <img src="https://i.ibb.co/wFbTr2zM/0-eci-net-logo.png" alt="NVSP Logo" class="h-9 sm:h-11 w-auto object-contain">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Selector Bar Right Below Header -->
+    <div class="w-full bg-white border-b border-slate-200 shadow-2xs py-2 px-4">
+        <div class="max-w-lg mx-auto flex items-center justify-between text-xs">
+            <span class="text-slate-600 font-medium flex items-center space-x-1.5">
+                <i class="fa-solid fa-language text-emerald-700"></i>
+                <span id="lblSelectLangText">Select Language / भाषा चुनें:</span>
+            </span>
+            <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-50 border border-slate-300 text-slate-800 rounded-md px-3 py-1 focus:outline-none focus:border-emerald-600 cursor-pointer font-semibold">
+                <option value="en">English</option>
+                <option value="hi">हिंदी (Hindi)</option>
+                <option value="bn">বাংলা (Bengali)</option>
+                <option value="te">తెలుగు (Telugu)</option>
+                <option value="mr">मराठी (Marathi)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+                <option value="gu">ગુજરાતી (Gujarati)</option>
+                <option value="ur">اردو (Urdu)</option>
+                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                <option value="ml">മലയാളം (Malayalam)</option>
+                <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                <option value="or">ଓଡ଼ିଆ (Odia)</option>
+                <option value="as">অসমীয়া (Assamese)</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Main Full-Screen Layout (No Cards) -->
+    <main class="flex-1 max-w-lg w-full mx-auto px-4 py-8 flex flex-col justify-center">
+        
+        <!-- 1. Input Form Section -->
+        <div id="formCard" class="w-full">
+            <div class="mb-6 border-b border-slate-200 pb-4">
+                <div class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-md mb-2 uppercase tracking-wider" id="txtSirBadge">
+                    Special Intensive Revision (SIR)
+                </div>
+                <h1 class="text-base sm:text-lg font-bold text-slate-950 tracking-tight" id="txtTitle">Voter Enumeration & Verification Portal</h1>
+                <p class="text-xs text-slate-500 mt-0.5" id="txtSubtitle">Please provide your electoral roll details for the ongoing SIR drive.</p>
+            </div>
+
+            <form id="voterForm" onsubmit="handleConfirm(event)" class="space-y-4">
+                
+                <!-- Name -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5" id="lblTypeName">
+                        Name <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative flex items-center input-focus bg-white border border-slate-300 rounded-lg transition-all duration-200 overflow-hidden">
+                        <span class="pl-3.5 pr-2.5 text-slate-400 text-xs">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <input type="text" id="fieldName" placeholder="Enter full name (any language)" required
+                            class="w-full py-2.5 pr-3.5 bg-transparent text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- EPIC no -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5" id="lblTypeEpic">
+                        EPIC Number <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative flex items-center input-focus bg-white border border-slate-300 rounded-lg transition-all duration-200 overflow-hidden">
+                        <span class="pl-3.5 pr-2.5 text-slate-400 text-xs">
+                            <i class="fa-solid fa-id-card"></i>
+                        </span>
+                        <input type="text" id="fieldEpic" placeholder="Enter EPIC number (e.g., ABC1234567)" required
+                            class="w-full py-2.5 pr-3.5 bg-transparent text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none uppercase">
+                    </div>
+                </div>
+
+                <!-- Serial no in E-Roll -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5" id="lblTypeSerial">
+                        Serial Number in E-Roll <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative flex items-center input-focus bg-white border border-slate-300 rounded-lg transition-all duration-200 overflow-hidden">
+                        <span class="pl-3.5 pr-2.5 text-slate-400 text-xs">
+                            <i class="fa-solid fa-list-ol"></i>
+                        </span>
+                        <input type="text" id="fieldSerial" placeholder="Enter serial number in e-roll" required
+                            class="w-full py-2.5 pr-3.5 bg-transparent text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Relative Name -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5" id="lblTypeRelative">
+                        Relative Name <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative flex items-center input-focus bg-white border border-slate-300 rounded-lg transition-all duration-200 overflow-hidden">
+                        <span class="pl-3.5 pr-2.5 text-slate-400 text-xs">
+                            <i class="fa-solid fa-user-group"></i>
+                        </span>
+                        <input type="text" id="fieldRelative" placeholder="Enter relative name (any language)" required
+                            class="w-full py-2.5 pr-3.5 bg-transparent text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Green Confirm Button -->
+                <button type="submit" class="w-full mt-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-medium rounded-lg text-xs shadow-sm transition active:scale-[0.99] flex items-center justify-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-check"></i>
+                    <span id="btnConfirmText">Confirm Details</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- 2. Preview Section (Hidden Initially) -->
+        <div id="previewCard" class="hidden w-full">
+            <div class="mb-5 border-b border-slate-200 pb-4">
+                <h2 class="text-base font-bold text-slate-950" id="txtPreviewHeading">SIR Enumeration Preview</h2>
+                <p class="text-xs text-slate-500 mt-0.5" id="txtPreviewSub">Please review your details before final submission to the database</p>
+            </div>
+
+            <div class="space-y-2.5 mb-6 text-xs">
+                <div class="flex justify-between border-b border-slate-200/80 py-2.5">
+                    <span class="text-slate-500 font-medium" id="lblPrevName">Name:</span>
+                    <span id="prevName" class="font-semibold text-slate-900">--</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-200/80 py-2.5">
+                    <span class="text-slate-500 font-medium" id="lblPrevEpic">EPIC Number:</span>
+                    <span id="prevEpic" class="font-semibold text-slate-900 uppercase">--</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-200/80 py-2.5">
+                    <span class="text-slate-500 font-medium" id="lblPrevSerial">Serial Number in E-Roll:</span>
+                    <span id="prevSerial" class="font-semibold text-slate-900">--</span>
+                </div>
+                <div class="flex justify-between py-2.5">
+                    <span class="text-slate-500 font-medium" id="lblPrevRelative">Relative Name:</span>
+                    <span id="prevRelative" class="font-semibold text-slate-900">--</span>
+                </div>
+            </div>
+
+            <!-- Two Options: Edit & Final Submit -->
+            <div class="flex space-x-3">
+                <button onclick="handleEdit()" class="flex-1 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-medium shadow-sm transition active:scale-95 flex items-center justify-center space-x-1.5 cursor-pointer">
+                    <i class="fa-solid fa-pen"></i>
+                    <span id="btnEditText">Edit</span>
+                </button>
+                <button onclick="handleFinalSubmit()" class="flex-1 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-medium shadow-sm transition active:scale-95 flex items-center justify-center space-x-1.5 cursor-pointer">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span id="btnSubmitText">Final Submit</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. Loading Spinner Section (5 Seconds Process) -->
+        <div id="loadingCard" class="hidden w-full text-center py-12">
+            <div class="w-12 h-12 border-3 border-emerald-200 border-t-emerald-700 rounded-full animate-spin mx-auto mb-4"></div>
+            <h3 class="text-sm font-bold text-slate-900 mb-1" id="txtLoadingTitle">Processing SIR Data</h3>
+            <p class="text-xs text-slate-500" id="txtLoadingSub">Please wait while your verification entry is being updated...</p>
+        </div>
+
+        <!-- 4. Success Section (Hidden Initially) -->
+        <div id="successCard" class="hidden w-full text-center py-8">
+            <div class="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 mx-auto mb-4 animate-scale-up">
+                <i class="fa-solid fa-circle-check text-3xl animate-bounce"></i>
+            </div>
+            
+            <h3 class="text-sm font-bold text-emerald-800 mb-1" id="txtSuccessTitle">Submission Successful</h3>
+            <p class="text-xs text-slate-600 mb-6 leading-relaxed" id="txtSuccessDesc">This entry has been successfully saved on the server of the Election Commission of India.</p>
+            
+            <button onclick="resetAll()" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-medium shadow-sm transition active:scale-95 cursor-pointer flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-plus"></i>
+                <span id="btnAnotherText">Submit Another Entry</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-[11px] py-4 px-4 text-center border-t border-slate-800 mt-auto">
+        <p class="font-medium text-slate-300" id="footerText1">National Voters' Service Portal - Special Intensive Revision (SIR)</p>
+        <p class="text-slate-500 text-[10px] mt-0.5" id="footerText2">Designed, Developed and Hosted by National Informatics Centre (NIC)</p>
+        <p class="text-[9px] text-slate-600 mt-2" id="footerText3">© Copyright Election Commission of India. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let formData = {};
+        let currentLang = 'en';
+
+        const translations = {
+            en: {
+                selectLangText: "Select Language / भाषा चुनें:",
+                sirBadge: "Special Intensive Revision (SIR)",
+                title: "Voter Enumeration & Verification Portal",
+                subtitle: "Please provide your electoral roll details for the ongoing SIR drive in any language of your choice.",
+                nameLbl: "Name",
+                namePh: "Enter full name (any language)",
+                epicLbl: "EPIC Number",
+                epicPh: "Enter EPIC number (e.g., ABC1234567)",
+                serialLbl: "Serial Number in E-Roll",
+                serialPh: "Enter serial number in e-roll",
+                relativeLbl: "Relative Name",
+                relativePh: "Enter relative name (any language)",
+                confirmBtn: "Confirm Details",
+                prevHead: "SIR Enumeration Preview",
+                prevSub: "Please review your details before final submission to the database",
+                editBtn: "Edit",
+                submitBtn: "Final Submit",
+                loadTitle: "Processing SIR Data",
+                loadSub: "Please wait while your verification entry is being updated...",
+                succTitle: "Submission Successful",
+                succDesc: "This entry has been successfully saved on the server of the Election Commission of India.",
+                anotherBtn: "Submit Another Entry",
+                foot1: "National Voters' Service Portal - Special Intensive Revision (SIR)",
+                foot2: "Designed, Developed and Hosted by National Informatics Centre (NIC)",
+                foot3: "© Copyright Election Commission of India. All Rights Reserved."
+            },
+            hi: {
+                selectLangText: "भाषा चुनें / Select Language:",
+                sirBadge: "विशेष गहन पुनरीक्षण (SIR)",
+                title: "मतदाता गणना एवं सत्यापन पोर्टल",
+                subtitle: "कृपया अपनी पसंद की किसी भी भाषा में चल रहे SIR अभियान के लिए अपने मतदाता सूची का विवरण दर्ज करें।",
+                nameLbl: "नाम",
+                namePh: "पूरा नाम दर्ज करें (किसी भी भाषा में)",
+                epicLbl: "एपिक नंबर (EPIC Number)",
+                epicPh: "एपिक नंबर दर्ज करें (जैसे, ABC1234567)",
+                serialLbl: "मतदाता सूची में क्रम संख्या (Serial No)",
+                serialPh: "मतदाता सूची में क्रम संख्या दर्ज करें",
+                relativeLbl: "रिश्तेदार का नाम",
+                relativePh: "रिश्तेदार का नाम दर्ज करें (किसी भी भाषा में)",
+                confirmBtn: "विवरण की पुष्टि करें",
+                prevHead: "SIR गणना पूर्वावलोकन",
+                prevSub: "डेटाबेस में अंतिम रूप से सबमिट करने से पहले कृपया अपने विवरण की समीक्षा करें",
+                editBtn: "संपादित करें (Edit)",
+                submitBtn: "अंतिम सबमिट (Final Submit)",
+                loadTitle: "SIR डेटा प्रोसेस हो रहा है",
+                loadSub: "कृपया प्रतीक्षा करें जब तक आपका सत्यापन डेटा अपडेट किया जा रहा है...",
+                succTitle: "सफलतापूर्वक सबमिट हो गया",
+                succDesc: "यह प्रविष्टि भारतीय निर्वाचन आयोग के सर्वर पर सफलतापूर्वक सेव हो गई है।",
+                anotherBtn: "दूसरी प्रविष्टि दर्ज करें",
+                foot1: "राष्ट्रीय मतदाता सेवा पोर्टल - विशेष गहन पुनरीक्षण (SIR)",
+                foot2: "राष्ट्रीय सूचना विज्ञान केंद्र (NIC) द्वारा डिज़ाइन, विकसित और होस्ट किया गया",
+                foot3: "© कॉपीराइट भारत निर्वाचन आयोग। सर्वाधिकार सुरक्षित।"
+            },
+            bn: {
+                selectLangText: "ভাষা নির্বাচন করুন / Select Language:",
+                sirBadge: "বিশেষ নিবিড় সংশোধন (SIR)",
+                title: "ভোটার গণনা এবং যাচাইকরণ পোর্টাল",
+                subtitle: "আপনার পছন্দের যেকোনো ভাষায় চলমান SIR ড্রাইভের জন্য আপনার ভোটার তালিকার বিবরণ প্রদান করুন।",
+                nameLbl: "নাম",
+                namePh: "সম্পূর্ণ নাম লিখুন (যেকোনো ভাষায়)",
+                epicLbl: "EPIC নম্বর",
+                epicPh: "EPIC নম্বর লিখুন (যেমন, ABC1234567)",
+                serialLbl: "ই-রোলে ক্রমিক নম্বর",
+                serialPh: "ই-রোলে ক্রমিক নম্বর লিখুন",
+                relativeLbl: "আত্মীয়ের নাম",
+                relativePh: "আত্মীয়ের নাম লিখুন (যেকোনো ভাষায়)",
+                confirmBtn: "বিবরণ নিশ্চিত করুন",
+                prevHead: "SIR গণনার পূর্বরূপ",
+                prevSub: "ডেটাবেসে চূড়ান্ত জমার দেওয়ার আগে আপনার বিবরণ পর্যালোচনা করুন",
+                editBtn: "সম্পাদনা করুন",
+                submitBtn: "চূড়ান্ত জমা দিন",
+                loadTitle: "SIR ডেটা প্রক্রিয়া করা হচ্ছে",
+                loadSub: "অনুগ্রহ করে অপেক্ষা করুন যখন আপনার যাচাইকরণ এন্ট্রি আপডেট করা হচ্ছে...",
+                succTitle: "জমা সফল হয়েছে",
+                succDesc: "এই এন্ট্রিটি সফলভাবে ভারতের নির্বাচন কমিশনের সার্ভারে সংরক্ষিত হয়েছে।",
+                anotherBtn: "আরেকটি এন্ট্রি জমা দিন",
+                foot1: "ন্যাশনাল ভোটার্স সার্ভিস পোর্টাল - বিশেষ নিবিড় সংশোধন (SIR)",
+                foot2: "ন্যাশনাল ইনফরমেটিক্স সেন্টার (NIC) দ্বারা ডিজাইন এবং ডেভেলপ করা",
+                foot3: "© কপিরাইট নির্বাচন কমিশন অফ ইন্ডিয়া। সর্বস্বত্ব সংরক্ষিত।"
+            },
+            te: {
+                selectLangText: "భాషను ఎంచుకోండి / Select Language:",
+                sirBadge: "ప్రత్యేక ఇంటెన్సివ్ రివిజన్ (SIR)",
+                title: "ఓటరు లెక్కింపు & ధృవీకరణ పోర్టల్",
+                subtitle: "మీకు నచ్చిన ఏ భాషలోనైనా జరుగుతున్న SIR డ్రైవ్ కోసం మీ ఓటరు జాబితా వివరాలను నమోదు చేయండి.",
+                nameLbl: "పేరు",
+                namePh: "పూర్తి పేరును నమోదు చేయండి (ఏ భాషలోనైనా)",
+                epicLbl: "EPIC నంబర్",
+                epicPh: "EPIC నంబర్‌ను నమోదు చేయండి (ఉదా., ABC1234567)",
+                serialLbl: "ఓటరు జాబితాలో క్రమ సంఖ్య",
+                serialPh: "క్రమ సంఖ్యను నమోదు చేయండి",
+                relativeLbl: "సంబంధం ఉన్నవారి పేరు",
+                relativePh: "సంబంధం ఉన్నవారి పేరును నమోదు చేయండి",
+                confirmBtn: "వివరాలను నిర్ధారించండి",
+                prevHead: "SIR ప్రివీవ్",
+                prevSub: "డేటాబేస్‌కు ఫైనల్ సబ్మిట్ చేసే ముందు దయచేసి మీ వివరాలను సమీక్షించండి",
+                editBtn: "సవరించు",
+                submitBtn: "ఫైనల్ సబ్మిట్",
+                loadTitle: "SIR డేటా ప్రాసెస్ చేయబడుతోంది",
+                loadSub: "దయచేసి మీ ధృవీకరణ ఎంట్రీ అప్‌డేట్ అయ్యే వరకు వేచి ఉండండి...",
+                succTitle: "సమర్పణ విజయవంతమైంది",
+                succDesc: "ఈ ఎంట్రీ భారతదేశ ఎన్నికల సంఘం సర్వర్‌లో విజయవంతంగా సేవ్ చేయబడింది.",
+                anotherBtn: "మరో ఎంట్రీని సమర్పించండి",
+                foot1: "నేషనల్ ఓటర్స్ సర్వీస్ పోర్టల్ - స్పెషల్ ఇంటెన్సివ్ రివిజన్ (SIR)",
+                foot2: "నేషనల్ ఇన్ఫర్మేటిక్స్ సెంటర్ (NIC) ద్వారా రూపొందించబడింది",
+                foot3: "© కాపీరైట్ ఎలక్షన్ కమిషన్ ఆఫ్ ఇండియా. అన్ని హక్కులూ ప్రత్యేకించబడ్డాయి."
+            },
+            mr: {
+                selectLangText: "भाषा निवडा / Select Language:",
+                sirBadge: "विशेष कसून पुनरीक्षण (SIR)",
+                title: "मतदार मोजणी आणि पडताळणी पोर्टल",
+                subtitle: "तुमच्या पसंतीच्या कोणत्याही भाषेत चालू असलेल्या SIR मोहिमेसाठी तुमचे मतदार यादीचे तपशील द्या.",
+                nameLbl: "नाव",
+                namePh: "पूर्ण नाव प्रविष्ट करा (कोणत्याही भाषेत)",
+                epicLbl: "EPIC क्रमांक",
+                epicPh: "EPIC क्रमांक प्रविष्ट करा (उदा., ABC1234567)",
+                serialLbl: "ई-रोल मधील अनुक्रमांक",
+                serialPh: "अनुक्रमांक प्रविष्ट करा",
+                relativeLbl: "नातेवाईकाचे नाव",
+                relativePh: "नातेवाईकाचे नाव प्रविष्ट करा",
+                confirmBtn: "तपशील निश्चित करा",
+                prevHead: "SIR गणनेचे पूर्वावलोकन",
+                prevSub: "डेटाबेसमध्ये अंतिम सबमिट करण्यापूर्वी कृपया तुमच्या तपशीलांचे पुनरावलोकन करा",
+                editBtn: "संपादित करा",
+                submitBtn: "अंतिम सबमिट",
+                loadTitle: "SIR डेटा प्रक्रिया सुरू आहे",
+                loadSub: "कृपया प्रतीक्षा करा जेव्हा तुमचा पडताळणी डेटा अपडेट केला जात आहे...",
+                succTitle: "यशस्वीरित्या सबमिट केले",
+                succDesc: "ही नोंद भारताच्या निवडणूक आयोगाच्या सर्व्हरवर यशस्वीरित्या जतन केली गेली आहे.",
+                anotherBtn: "दुसरी नोंद दाखल करा",
+                foot1: "राष्ट्रीय मतदार सेवा पोर्टल - विशेष कसून पुनरीक्षण (SIR)",
+                foot2: "नॅशनल इन्फर्मेटिक्स सेंटर (NIC) द्वारे डिझाइन आणि विकसित केलेले",
+                foot3: "© कॉपीराइट भारत निवडणूक आयोग. सर्व हक्क राखीव."
+            },
+            ta: {
+                selectLangText: "மொழியைத் தேர்ந்தெடுக்கவும் / Select Language:",
+                sirBadge: "சிறப்பு தீவிர திருத்தம் (SIR)",
+                title: "வாக்காளர் கணக்கெடுப்பு & சரிபார்ப்பு போர்டல்",
+                subtitle: "நீங்கள் விரும்பும் எந்த மொழியிலும் நடந்து வரும் SIR இயக்கத்திற்கான உங்கள் வாக்காளர் பட்டியலை வழங்கவும்.",
+                nameLbl: "பெயர்",
+                namePh: "முழுப் பெயரை உள்ளிடவும்",
+                epicLbl: "EPIC எண்",
+                epicPh: "EPIC எண்ணை உள்ளிடவும் (எ.கா., ABC1234567)",
+                serialLbl: "வாக்காளர் பட்டியலில் வரிசை எண்",
+                serialPh: "வரிசை எண்ணை உள்ளிடவும்",
+                relativeLbl: "உறவினர் பெயர்",
+                relativePh: "உறவினர் பெயரை உள்ளிடவும்",
+                confirmBtn: "விவரங்களை உறுதிப்படுத்தவும்",
+                prevHead: "SIR முன்னோட்டம்",
+                prevSub: "தரவுத்தளத்தில் சமர்ப்பிப்பதற்கு முன் உங்கள் விவரங்களைச் சரிபார்க்கவும்",
+                editBtn: "மாற்று",
+                submitBtn: "இறுதி சமர்ப்பிப்பு",
+                loadTitle: "SIR தரவு செயலாக்கப்படுகிறது",
+                loadSub: "உங்கள் சரிபார்ப்பு உள்ளீடு புதுப்பிக்கப்படும் வரை காத்திருக்கவும்...",
+                succTitle: "சமர்ப்பித்தல் வெற்றிகரமாக முடிந்தது",
+                succDesc: "இந்த உள்ளீடு இந்திய தேர்தல் ஆணையத்தின் சர்வரில் வெற்றிகரமாக சேமிக்கப்பட்டது.",
+                anotherBtn: "மற்றொரு உள்ளீட்டை சமர்ப்பிக்கவும்",
+                foot1: "தேசிய வாக்காளர் சேவை போர்டல் - சிறப்பு தீவிர திருத்தம் (SIR)",
+                foot2: "தேசிய தகவல் மையத்தால் (NIC) வடிவமைக்கப்பட்டு உருவாக்கப்பட்டது",
+                foot3: "© பதிப்புரிமை இந்திய தேர்தல் ஆணையம். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+            },
+            gu: {
+                selectLangText: "ભાષા પસંદ કરો / Select Language:",
+                sirBadge: "ખાસ સઘન પુનરાવર્તન (SIR)",
+                title: "મતદાર ગણતરી અને ચકાસણી પોર્ટલ",
+                subtitle: "તમારી પસંદગીની કોઈપણ ભાષામાં ચાલી રહેલા SIR અભિયાન માટે તમારી મતદાર યાદીની વિગતો પ્રદાન કરો.",
+                nameLbl: "નામ",
+                namePh: "પૂરું નામ દાખલ કરો",
+                epicLbl: "EPIC નંબર",
+                epicPh: "EPIC નંબર દાખલ કરો (દા.ત., ABC1234567)",
+                serialLbl: "મતદાર યાદીમાં ક્રમ નંબર",
+                serialPh: "ક્રમ નંબર દાખલ કરો",
+                relativeLbl: "સગાનું નામ",
+                relativePh: "સગાનું નામ દાખલ કરો",
+                confirmBtn: "વિગતોની પુષ્ટિ કરો",
+                prevHead: "SIR પૂર્વાવલોકન",
+                prevSub: "ડેટાબેઝમાં અંતિમ સબમિટ કરતા પહેલા કૃપા કરીને તમારી વિગતોની સમીક્ષા કરો",
+                editBtn: "ફેરફાર કરો",
+                submitBtn: "અંતિમ સબમિટ",
+                loadTitle: "SIR ડેટા પ્રક્રિયા થઈ રહી છે",
+                loadSub: "કૃપા કરીને રાહ જુઓ જ્યારે તમારી ચકાસણી એન્ટ્રી અપડેટ થઈ રહી છે...",
+                succTitle: "સફળતાપૂર્વક સબમિટ થયું",
+                succDesc: "આ એન્ટ્રી ભારતના ચૂંટણી પંચના સર્વર પર સફળતાપૂર્વક સાચવવામાં આવી છે.",
+                anotherBtn: "બીજી એન્ટ્રી સબમિટ કરો",
+                foot1: "નેશનલ વોટર્સ સર્વિસ પોર્ટલ - ખાસ સઘન પુનરાવર્તન (SIR)",
+                foot2: "નેશનલ ઇન્ફોર્મેટિક્સ સેન્ટર (NIC) દ્વારા ડિઝાઇન અને વિકસિત",
+                foot3: "© કૉપિરાઇટ ભારતીય ચૂંટણી પંચ. બધા હકો સુરક્ષિત."
+            },
+            ur: {
+                selectLangText: "زبان منتخب کریں / Select Language:",
+                sirBadge: "خصوصی گہرائی سے نظرثانی (SIR)",
+                title: "ووٹر کی گنتی اور توثیق کا پورٹل",
+                subtitle: "اپنی پسند کی کسی بھی زبان میں جاری SIR مہم کے لیے اپنی ووٹر لسٹ کی تفصیلات فراہم کریں۔",
+                nameLbl: "نام",
+                namePh: "पूरा نام درج کریں",
+                epicLbl: "EPIC نمبر",
+                epicPh: "EPIC نمبر درج کریں (مثلاً ABC1234567)",
+                serialLbl: "ووٹر لسٹ میں سیریل نمبر",
+                serialPh: "سیریل نمبر درج کریں",
+                relativeLbl: "رشتہ دار کا نام",
+                relativePh: "رشتہ دار کا نام درج کریں",
+                confirmBtn: "تفصیلات کی تصدیق کریں",
+                prevHead: "SIR پیش نظارہ",
+                prevSub: "ڈیٹا بیس میں فائنل جمع کرانے سے پہلے اپنی تفصیلات کا جائزہ لیں",
+                editBtn: "ترمیم کریں",
+                submitBtn: "فائنل سبمٹ",
+                loadTitle: "SIR ڈیٹا پروسیس ہو رہا ہے",
+                loadSub: "براہ کرم انتظار کریں جب تک آپ کی توثیق کی انٹری اپ ڈیٹ ہو رہی ہے...",
+                succTitle: "کامیابی کے ساتھ جمع ہو گیا",
+                succDesc: "یہ انٹری الیکشن کمیشن آف انڈیا کے سرور پر کامیابی کے ساتھ محفوظ ہو گئی ہے۔",
+                anotherBtn: "دوسری انٹری جمع کریں",
+                foot1: "نیشنل ووٹرز سروس پورٹل - خصوصی گہرائی سے نظرثانی (SIR)",
+                foot2: "نیشنل انفارمیٹکس سینٹر (NIC) کے ذریعہ ڈیزائن اور تیار کردہ",
+                foot3: "© کاپی رائٹ الیکشن کمیشن آف انڈیا۔ جملہ حقوق محفوظ ہیں۔"
+            },
+            kn: {
+                selectLangText: "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ / Select Language:",
+                sirBadge: "ವಿಶೇಷ ತೀವ್ರ ಪರಿಷ್ಕರಣೆ (SIR)",
+                title: "ಮತದಾರರ ಎಣಿಕೆ ಮತ್ತು ಪರಿಶೀಲನಾ ಪೋರ್ಟಲ್",
+                subtitle: "ನಿಮ್ಮ ಆಯ್ಕೆಯ ಯಾವುದೇ ಭಾಷೆಯಲ್ಲಿ ನಡೆಯುತ್ತಿರುವ SIR ಅಭಿಯಾನಕ್ಕಾಗಿ ನಿಮ್ಮ ಮತದಾರರ ಪಟ್ಟಿಯ ವಿವರಗಳನ್ನು ಒದಗಿಸಿ.",
+                nameLbl: "ಹೆಸರು",
+                namePh: "ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                epicLbl: "EPIC ಸಂಖ್ಯೆ",
+                epicPh: "EPIC ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ (ಉದಾ., ABC1234567)",
+                serialLbl: "ಚುನಾವಣಾ ಪಟ್ಟಿಯಲ್ಲಿ ಕ್ರಮ ಸಂಖ್ಯೆ",
+                serialPh: "ಕ್ರಮ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+                relativeLbl: "ಸಂಬಂಧಿಕರ ಹೆಸರು",
+                relativePh: "ಸಂಬಂಧಿಕರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                confirmBtn: "ವಿವರಗಳನ್ನು ಖಚಿತಪಡಿಸಿ",
+                prevHead: "SIR ಪೂರ್ವವೀಕ್ಷಣೆ",
+                prevSub: "ಡೇಟಾಬೇಸ್‌ಗೆ ಅಂತಿಮವಾಗಿ ಸಲ್ಲಿಸುವ ಮೊದಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ",
+                editBtn: "ತಿದ್ದು",
+                submitBtn: "ಅಂತಿಮ ಸಲ್ಲಿಕೆ",
+                loadTitle: "SIR ಡೇಟಾ ಪ್ರಕ್ರಿಯೆಗೊಳ್ಳುತ್ತಿದೆ",
+                loadSub: "ನಿಮ್ಮ ಪರಿಶೀಲನಾ ನಮೂದು ನವೀಕರಿಸಲ್ಪಡುವವರೆಗೆ ದಯವಿಟ್ಟು ಕಾಯಿರಿ...",
+                succTitle: "ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ",
+                succDesc: "ಈ ನಮೂದನ್ನು ಭಾರತೀಯ ಚುನಾವಣಾ ಆಯೋಗದ ಸರ್ವರ್‌ನಲ್ಲಿ ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ.",
+                anotherBtn: "ಮತ್ತೊಂದು ನಮೂದನ್ನು ಸಲ್ಲಿಸಿ",
+                foot1: "ರಾಷ್ಟ್ರೀಯ ಮತದಾರರ ಸೇವಾ ಪೋರ್ಟಲ್ - ವಿಶೇಷ ತೀವ್ರ ಪರಿಷ್ಕರಣೆ (SIR)",
+                foot2: "ರಾಷ್ಟ್ರೀಯ ಮಾಹಿತಿ ಕೇಂದ್ರದಿಂದ (NIC) ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ ಮತ್ತು ಅಭಿವೃದ್ಧಿಪಡಿಸಲಾಗಿದೆ",
+                foot3: "© ಹಕ್ಕುಸ್ವಾಮ್ಯ ಭಾರತ ಚುನಾವಣಾ ಆಯೋಗ. ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ."
+            },
+            ml: {
+                selectLangText: "ഭാഷ തിരഞ്ഞെടുക്കുക / Select Language:",
+                sirBadge: "പ്രത്യേക തീവ്ര പുനരവലോകനം (SIR)",
+                title: "വോട്ടർ കണക്കെടുപ്പ് & വെരിഫിക്കേഷൻ പോർട്ടൽ",
+                subtitle: "നിങ്ങൾക്കിഷ്ടമുള്ള ഏതെങ്കിലും ഭാഷയിൽ നടക്കുന്ന SIR ഡ്രൈവിനായി നിങ്ങളുടെ വോട്ടർ പട്ടിക വിവരങ്ങൾ നൽകുക.",
+                nameLbl: "പേര്",
+                namePh: "പൂർണ്ണമായ പേര് നൽകുക",
+                epicLbl: "EPIC നമ്പർ",
+                epicPh: "EPIC നമ്പർ നൽകുക (ഉദാഹരണത്തിന് ABC1234567)",
+                serialLbl: "വോട്ടർ പട്ടികയിലെ സീരിയൽ നമ്പർ",
+                serialPh: "സീരിയൽ നമ്പർ നൽകുക",
+                relativeLbl: "ബന്ധുവിന്റെ പേര്",
+                relativePh: "ബന്ധുവിന്റെ പേര് നൽകുക",
+                confirmBtn: "വിവരങ്ങൾ സ്ഥിരീകരിക്കുക",
+                prevHead: "SIR പ്രിവ്യൂ",
+                prevSub: "ഡാറ്റാബേസിലേക്ക് അവസാനമായി സമർപ്പിക്കുന്നതിന് മുമ്പ് നിങ്ങളുടെ വിശദാംശങ്ങൾ പരിശോധിക്കുക",
+                editBtn: "മാറ്റങ്ങൾ വരുത്തുക",
+                submitBtn: "അന്തിമ സമർപ്പണം",
+                loadTitle: "SIR ഡാറ്റ പ്രോസസ്സ് ചെയ്യുന്നു",
+                loadSub: "നിങ്ങളുടെ വെരിഫിക്കേഷൻ എൻട്രി അപ്ഡേറ്റ് ചെയ്യുന്നതുവരെ ദയവായി കാത്തിരിക്കുക...",
+                succTitle: "വിജയകരമായി സമർപ്പിച്ചു",
+                succDesc: "ഈ എൻട്രി ഇന്ത്യയിലെ തിരഞ്ഞെടുപ്പ് കമ്മീഷന്റെ സെർവറിൽ വിജയകരമായി സേവ് ചെയ്തിരിക്കുന്നു.",
+                anotherBtn: "മറ്റൊരു എൻട്രി സമർപ്പിക്കുക",
+                foot1: "ദേശീയ വോട്ടർ സർവീസ് പോർട്ടൽ - പ്രത്യേക തീവ്ര പുനരവലോകനം (SIR)",
+                foot2: "നാഷണൽ ഇൻഫോമാറ്റിക്സ് സെന്റർ (NIC) രൂപകൽപ്പന ചെയ്ത് വികസിപ്പിച്ചെടുത്തത്",
+                foot3: "© പകർപ്പവകാശം ഇലക്ഷൻ കമ്മീഷൻ ഓഫ് ഇന്ത്യ. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം."
+            },
+            pa: {
+                selectLangText: "ਭਾਸ਼ਾ ਚੁਣੋ / Select Language:",
+                sirBadge: "ਵਿਸ਼ੇਸ਼ ਤੀਬਰ ਸੋਧ (SIR)",
+                title: "ਵੋਟਰ ਗਿਣਤੀ ਅਤੇ ਤਸਦੀਕ ਪੋਰਟਲ",
+                subtitle: "ਆਪਣੀ ਪਸੰਦ ਦੀ ਕਿਸੇ ਵੀ ਭਾਸ਼ਾ ਵਿੱਚ ਚੱਲ ਰਹੀ SIR ਮੁਹਿੰਮ ਲਈ ਆਪਣੀ ਵੋਟਰ ਸੂਚੀ ਦੇ ਵੇਰਵੇ ਪ੍ਰਦਾਨ ਕਰੋ।",
+                nameLbl: "ਨਾਮ",
+                namePh: "ਪੂਰਾ ਨਾਮ ਦਰਜ ਕਰੋ",
+                epicLbl: "EPIC ਨੰਬਰ",
+                epicPh: "EPIC ਨੰਬਰ ਦਰਜ ਕਰੋ (ਜਿਵੇਂ, ABC1234567)",
+                serialLbl: "ਈ-ਰੋਲ ਵਿੱਚ ਲੜੀ ਨੰਬਰ",
+                serialPh: "ਲੜੀ ਨੰਬਰ ਦਰਜ ਕਰੋ",
+                relativeLbl: "ਸਾਕਸ਼ੀ/ਰਿਸ਼ਤੇਦਾਰ ਦਾ ਨਾਮ",
+                relativePh: "ਰਿਸ਼ਤੇਦਾਰ ਦਾ ਨਾਮ ਦਰਜ ਕਰੋ",
+                confirmBtn: "ਵੇਰਵਿਆਂ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+                prevHead: "SIR ਪੂਰਵਦਰਸ਼ਨ",
+                prevSub: "ਡਾਟਾਬੇਸ ਵਿੱਚ ਅੰਤਿਮ ਜਮ੍ਹਾਂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੇ ਵੇਰਵਿਆਂ ਦੀ ਸਮੀਖਿਆ ਕਰੋ",
+                editBtn: "ਸੋਧ ਕਰੋ",
+                submitBtn: "ਅੰਤਿਮ ਜਮ੍ਹਾਂ",
+                loadTitle: "SIR ਡਾਟਾ ਪ੍ਰੋਸੈਸ ਹੋ ਰਿਹਾ ਹੈ",
+                loadSub: "ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ ਜਦੋਂ ਤੱਕ ਤੁਹਾਡਾ ਤਸਦੀਕ ਡਾਟਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
+                succTitle: "ਸਫ਼ਲਤਾਪੂਰਵਕ ਜਮ੍ਹਾਂ ਹੋ ਗਿਆ",
+                succDesc: "ਇਹ ਐਂਟਰੀ ਭਾਰਤੀ ਚੋਣ ਕਮਿਸ਼ਨ ਦੇ ਸਰਵਰ ਉੱਤੇ ਸਫ਼ਲਤਾਪੂਰਵਕ ਸੇਵ ਹੋ ਗਈ ਹੈ।",
+                anotherBtn: "ਦੂਜੀ ਐਂਟਰੀ ਦਰਜ ਕਰੋ",
+                foot1: "ਰਾਸ਼ਟਰੀ ਵੋਟਰ ਸੇਵਾ ਪੋਰਟਲ - ਵਿਸ਼ੇਸ਼ ਤੀਬਰ ਸੋਧ (SIR)",
+                foot2: "ਨੈਸ਼ਨਲ ਇਨਫਰਮੈਟਿਕਸ ਸੈਂਟਰ (NIC) ਦੁਆਰਾ ਡਿਜ਼ਾਈਨ ਅਤੇ ਵਿਕਸਿਤ ਕੀਤਾ ਗਿਆ",
+                foot3: "© ਕਾਪੀਰਾਈਟ ਚੋਣ ਕਮਿਸ਼ਨ ਆਫ ਇੰਡੀਆ। ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।"
+            },
+            or: {
+                selectLangText: "ଭାଷା ଚୟନ କରନ୍ତୁ / Select Language:",
+                sirBadge: "ସ୍ୱତନ୍ତ୍ର ନିବିଡ଼ ସଂଶୋଧନ (SIR)",
+                title: "ଭୋଟର ଗଣନା ଏବଂ ଯାଞ୍ଚ ପୋର୍ଟାଲ",
+                subtitle: "ଆପଣଙ୍କ ପସନ୍ଦର ଯେକୌଣସି ଭାଷାରେ ଚାଲିଥିବା SIR ଅଭିଯାନ ପାଇଁ ଆପଣଙ୍କ ଭୋଟର ତାଲିକା ବିବରଣୀ ପ୍ରଦାନ କରନ୍ତୁ।",
+                nameLbl: "ନାମ",
+                namePh: "ପୂର୍ଣ୍ଣ ନାମ ପ୍ରବେଶ କରନ୍ତୁ",
+                epicLbl: "EPIC ନମ୍ବର",
+                epicPh: "EPIC ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ (ଯଥା, ABC1234567)",
+                serialLbl: "ଇ-ରୋଲ୍ ରେ କ୍ରମ ସଂଖ୍ୟା",
+                serialPh: "କ୍ରମ ସଂଖ୍ୟା ପ୍ରବେଶ କରନ୍ତୁ",
+                relativeLbl: "ସମ୍ପର୍କୀୟଙ୍କ ନାମ",
+                relativePh: "ସମ୍ପର୍କୀୟଙ୍କ ନାମ ପ୍ରବେଶ କରନ୍ତୁ",
+                confirmBtn: "ବିବରଣୀ ନିଶ୍ଚିତ କରନ୍ତୁ",
+                prevHead: "SIR ପୂର୍ବାବଲୋକନ",
+                prevSub: "ଡାଟାବେସରେ ଅନ୍ତିମ ଦାଖଲ କରିବା ପୂର୍ବରୁ ଦୟା କରି ଆପଣଙ୍କ ବିବରଣୀ ସମୀକ୍ଷା କରନ୍ତୁ",
+                editBtn: "ସମ୍ପାଦନ କରନ୍ତୁ",
+                submitBtn: "ଅନ୍ତିମ ଦାଖଲ",
+                loadTitle: "SIR ଡାଟା ପ୍ରକ୍ରିୟାକରଣ ଚାଲିଛି",
+                loadSub: "ଦୟା କରି ଅପେକ୍ଷା କରନ୍ତୁ ଯେପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କ ଯାଞ୍ଚ ଏଣ୍ଟ୍ରି ଅପଡେଟ୍ ହେଉଛି...",
+                succTitle: "ସଫଳତାର ସହିତ ଦାଖଲ ହୋଇଛି",
+                succDesc: "ଏହି ଏଣ୍ଟ୍ରି ଭାରତୀୟ ନିର୍ବାଚନ ଆୟୋଗଙ୍କ ସର୍ଭରରେ ସଫଳତାର ସହିତ ସେଭ୍ ହୋଇଯାଇଛି।",
+                anotherBtn: "ଅନ୍ୟ ଏକ ଏଣ୍ଟ୍ରି ଦାଖଲ କରନ୍ତୁ",
+                foot1: "ଜାତୀୟ ଭୋଟର ସେବା ପୋର୍ଟାଲ - ସ୍ୱତନ୍ତ୍ର ନିବିଡ଼ ସଂଶୋଧନ (SIR)",
+                foot2: "ଜାତୀୟ ସୂଚନା ବିଜ୍ଞାନ କେନ୍ଦ୍ର (NIC) ଦ୍ୱାରା ଡିଜାଇନ୍ ଏବଂ ବିକଶିତ",
+                foot3: "© କପିରାଇଟ୍ ନିର୍ବାଚନ ଆୟୋଗ ଅଫ୍ ଇଣ୍ଡିଆ। ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ।"
+            },
+            as: {
+                selectLangText: "ভাষা বাছক / Select Language:",
+                sirBadge: "বিশেষ প্ৰগাঢ় সংশোধনী (SIR)",
+                title: "ভোটাৰ গণনা আৰু পৰীক্ষণ পৰ্টেল",
+                subtitle: "আপোনাৰ পচন্দৰ যিকোনো ভাষাত চলি থকা SIR অভিযানৰ বাবে আপোনাৰ ভোটাৰ তালিকাৰ বিৱৰণ প্ৰদান কৰক।",
+                nameLbl: "নাম",
+                namePh: "সম্পূৰ্ণ নাম প্ৰৱেশ কৰক",
+                epicLbl: "EPIC নম্বৰ",
+                epicPh: "EPIC নম্বৰ প্ৰৱেশ কৰক (যেনে, ABC1234567)",
+                serialLbl: "ই-ৰোলত ক্ৰমসংখ্যা",
+                serialPh: "ক্ৰমসংখ্যা প্ৰৱেশ কৰক",
+                relativeLbl: "আত্মীয়ৰ নাম",
+                relativePh: "আত্মীয়ৰ নাম প্ৰৱেশ কৰক",
+                confirmBtn: "বিৱৰণ নিশ্চিত কৰক",
+                prevHead: "SIR পূৰ্বাৱলোকন",
+                prevSub: "ডেটাবেছত চূড়ান্ত জমা দিয়াৰ আগতে অনুগ্ৰহ কৰি আপোনাৰ বিৱৰণ পৰীক্ষা কৰক",
+                editBtn: "সম্পাদনা কৰক",
+                submitBtn: "চূড়ান্ত জমা",
+                loadTitle: "SIR ডেটা প্ৰক্ৰিয়াকৰণ কৰা হৈছে",
+                loadSub: "অনুগ্ৰহ কৰি অপেক্ষা কৰক যেতিয়ালৈকে আপোনাৰ পৰীক্ষণ এন্ট্ৰি আপডেট হৈ থাকে...",
+                succTitle: "সফলভাৱে জমা দিয়া হ'ল",
+                succDesc: "এই এন্ট্ৰিটো ভাৰতীয় নিৰ্বাচন আয়োগৰ চাৰ্ভাৰত সফলভাৱে সংৰক্ষণ কৰা হৈছে।",
+                anotherBtn: "আন এক এন্ট্ৰি জমা দিয়ক",
+                foot1: "ৰাষ্ট্ৰীয় ভোটাৰ সেৱা পৰ্টেল - বিশেষ প্ৰগাঢ় সংশোধনী (SIR)",
+                foot2: "ৰাষ্ট্ৰীয় তথ্য বিজ্ঞান কেন্দ্ৰ (NIC) দ্বাৰা ৰূপায়ণ আৰু বিকশিত",
+                foot3: "© স্বত্বাধিকাৰ নিৰ্বাচন আয়োগ অফ ইণ্ডিয়া। সকলো অধিকাৰ সংৰক্ষিত।"
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang] || translations['en'];
+
+            document.getElementById("lblSelectLangText").innerText = t.selectLangText;
+            document.getElementById("txtSirBadge").innerText = t.sirBadge;
+            document.getElementById("txtTitle").innerText = t.title;
+            document.getElementById("txtSubtitle").innerText = t.subtitle;
+            document.getElementById("lblTypeName").innerHTML = `${t.nameLbl} <span class="text-red-500">*</span>`;
+            document.getElementById("fieldName").placeholder = t.namePh;
+            document.getElementById("lblTypeEpic").innerHTML = `${t.epicLbl} <span class="text-red-500">*</span>`;
+            document.getElementById("fieldEpic").placeholder = t.epicPh;
+            document.getElementById("lblTypeSerial").innerHTML = `${t.serialLbl} <span class="text-red-500">*</span>`;
+            document.getElementById("fieldSerial").placeholder = t.serialPh;
+            document.getElementById("lblTypeRelative").innerHTML = `${t.relativeLbl} <span class="text-red-500">*</span>`;
+            document.getElementById("fieldRelative").placeholder = t.relativePh;
+            document.getElementById("btnConfirmText").innerText = t.confirmBtn;
+
+            document.getElementById("txtPreviewHeading").innerText = t.prevHead;
+            document.getElementById("txtPreviewSub").innerText = t.prevSub;
+            document.getElementById("lblPrevName").innerText = t.nameLbl + ":";
+            document.getElementById("lblPrevEpic").innerText = t.epicLbl + ":";
+            document.getElementById("lblPrevSerial").innerText = t.serialLbl + ":";
+            document.getElementById("lblPrevRelative").innerText = t.relativeLbl + ":";
+            document.getElementById("btnEditText").innerText = t.editBtn;
+            document.getElementById("btnSubmitText").innerText = t.submitBtn;
+
+            document.getElementById("txtLoadingTitle").innerText = t.loadTitle;
+            document.getElementById("txtLoadingSub").innerText = t.loadSub;
+
+            document.getElementById("txtSuccessTitle").innerText = t.succTitle;
+            document.getElementById("txtSuccessDesc").innerText = t.succDesc;
+            document.getElementById("btnAnotherText").innerText = t.anotherBtn;
+
+            document.getElementById("footerText1").innerText = t.foot1;
+            document.getElementById("footerText2").innerText = t.foot2;
+            document.getElementById("footerText3").innerText = t.foot3;
+        }
+
+        function handleConfirm(e) {
+            e.preventDefault();
+            
+            formData.name = document.getElementById("fieldName").value.trim();
+            formData.epic = document.getElementById("fieldEpic").value.trim();
+            formData.serial = document.getElementById("fieldSerial").value.trim();
+            formData.relative = document.getElementById("fieldRelative").value.trim();
+
+            document.getElementById("prevName").innerText = formData.name;
+            document.getElementById("prevEpic").innerText = formData.epic;
+            document.getElementById("prevSerial").innerText = formData.serial;
+            document.getElementById("prevRelative").innerText = formData.relative;
+
+            document.getElementById("formCard").classList.add("hidden");
+            document.getElementById("previewCard").classList.remove("hidden");
+        }
+
+        function handleEdit() {
+            document.getElementById("previewCard").classList.add("hidden");
+            document.getElementById("formCard").classList.remove("hidden");
+        }
+
+        function handleFinalSubmit() {
+            document.getElementById("previewCard").classList.add("hidden");
+            document.getElementById("loadingCard").classList.remove("hidden");
+
+            // 5 seconds loading process
+            setTimeout(() => {
+                document.getElementById("loadingCard").classList.add("hidden");
+                document.getElementById("successCard").classList.remove("hidden");
+            }, 5000);
+        }
+
+        function resetAll() {
+            document.getElementById("voterForm").reset();
+            document.getElementById("successCard").classList.add("hidden");
+            document.getElementById("formCard").classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
