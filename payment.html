@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment Gateway — National Recruitment Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .gateway-tab.active {
+            border-color: #16a34a;
+            background-color: #f0fdf4;
+            color: #166534;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white">
+
+    <!-- Top Accent Ribbon (Tricolor) -->
+    <div class="h-1.5 w-full bg-gradient-to-r from-orange-500 via-white to-emerald-600"></div>
+
+    <!-- Executive Header with Both Official Logos -->
+    <header class="w-full bg-white border-b border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="https://imgbb.com/" target="_blank" class="block">
+                    <img src="https://i.ibb.co/dsJC52TB/logo-png-b686afb9ac69b2a1342bd76217456b81.png" alt="Emblem of India" class="h-10 sm:h-12 w-auto object-contain">
+                </a>
+                <div class="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                <div class="hidden sm:block">
+                    <h1 class="text-xs font-bold tracking-tight text-slate-900 uppercase">Secure Payment Portal</h1>
+                    <p class="text-[10px] text-slate-500 font-medium">Government Financial Services Engine</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <a href="https://imgbb.com/" target="_blank" class="block">
+                    <img src="https://i.ibb.co/wFbTr2zM/0-eci-net-logo.png" alt="Official Portal Logo" class="h-9 sm:h-11 w-auto object-contain">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub Header Utility Bar -->
+    <div class="bg-slate-50 border-b border-slate-200 py-2.5">
+        <div class="max-w-4xl mx-auto px-4 flex justify-center items-center text-xs font-semibold text-slate-700 uppercase tracking-wider">
+            Application Processing Fee Checkout
+        </div>
+    </div>
+
+    <!-- Main Payment Container -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8">
+        
+        <!-- Grid Layout: Summary & Payment Modes -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Left Column: Detailed Fee Breakdown (1 Col) -->
+            <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-2xs space-y-4 h-fit">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-2.5">Fee Breakdown & Refund Policy</h2>
+                
+                <div class="space-y-2.5 text-xs">
+                    <div class="flex justify-between text-slate-600">
+                        <span>Application Ref:</span>
+                        <span class="font-mono font-semibold text-slate-900">NRP-2026-8942</span>
+                    </div>
+                    <div class="flex justify-between text-slate-600">
+                        <span>Application Fee:</span>
+                        <span class="font-semibold text-slate-900">₹ 250.00</span>
+                    </div>
+                    <div class="flex justify-between text-slate-600">
+                        <span>ID & Password Charge:</span>
+                        <span class="font-semibold text-slate-900">₹ 2,450.00</span>
+                    </div>
+                    <div class="flex justify-between text-slate-600">
+                        <span>Gateway Fee:</span>
+                        <span class="font-semibold text-slate-900">₹ 5.00</span>
+                    </div>
+                    <div class="border-t border-slate-200 pt-3 flex justify-between text-sm font-bold text-slate-900">
+                        <span>Total Payable:</span>
+                        <span class="text-emerald-700 font-mono text-base">₹ 2,705.00</span>
+                    </div>
+                </div>
+
+                <!-- Official Refund Policy Note -->
+                <div class="bg-emerald-50 p-3.5 rounded border border-emerald-200 text-[11px] text-emerald-900 space-y-2 leading-relaxed font-medium">
+                    <p class="font-bold flex items-center">
+                        <i class="fa-solid fa-circle-check text-emerald-600 mr-1.5 text-xs"></i> 
+                        Government Refund Guidelines:
+                    </p>
+                    <p>
+                        1. The <strong>₹ 250.00</strong> application fee is strictly non-refundable under any circumstances as per government norms.
+                    </p>
+                    <p>
+                        2. The ID & Password creation charge (<strong>₹ 2,450.00</strong>) along with the gateway fee (<strong>₹ 5.00</strong>), totaling <strong>₹ 2,455.00</strong>, will be <strong>automatically refunded</strong> to your original payment source within <strong>30 minutes</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Column: Payment Gateway Options (2 Cols) -->
+            <div class="md:col-span-2 bg-white p-6 sm:p-8 rounded-lg border border-slate-200 shadow-2xs">
+                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Select Payment Method</h2>
+
+                <!-- Payment Method Tabs -->
+                <div class="grid grid-cols-3 gap-3 mb-6 text-xs font-semibold text-center">
+                    <button type="button" onclick="switchTab('upi')" id="tabUpi" class="gateway-tab active py-3 px-2 rounded border border-emerald-600 bg-emerald-50 text-emerald-800 cursor-pointer transition flex flex-col items-center space-y-1.5 shadow-xs">
+                        <i class="fa-solid fa-qrcode text-base"></i>
+                        <span>UPI / QR Code</span>
+                    </button>
+                    <button type="button" onclick="switchTab('card')" id="tabCard" class="gateway-tab py-3 px-2 rounded border border-slate-200 bg-slate-50 text-slate-600 cursor-pointer transition flex flex-col items-center space-y-1.5 hover:border-slate-300">
+                        <i class="fa-solid fa-credit-card text-base"></i>
+                        <span>Card / Debit</span>
+                    </button>
+                    <button type="button" onclick="switchTab('netbanking')" id="tabNetbanking" class="gateway-tab py-3 px-2 rounded border border-slate-200 bg-slate-50 text-slate-600 cursor-pointer transition flex flex-col items-center space-y-1.5 hover:border-slate-300">
+                        <i class="fa-solid fa-building-columns text-base"></i>
+                        <span>Net Banking</span>
+                    </button>
+                </div>
+
+                <!-- Gateway Down Alert Banner -->
+                <div id="gatewayAlert" class="hidden mb-4 p-3 bg-rose-50 border border-rose-200 rounded text-xs text-rose-700 flex items-center space-x-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span id="alertText">Gateway is currently down for maintenance. Please use UPI / QR Code.</span>
+                </div>
+
+                <!-- Tab 1: UPI / QR Code Content -->
+                <div id="contentUpi" class="space-y-4 text-xs">
+                    <div class="flex flex-col items-center justify-center p-6 bg-slate-50 rounded border border-slate-200 text-center space-y-3">
+                        <!-- Custom Payment QR Code Image -->
+                        <div class="w-40 h-40 bg-white p-2 rounded border border-slate-300 shadow-2xs flex items-center justify-center">
+                            <img src="https://i.ibb.co/1tbHYbF2/IMG-20261011-101429-096.jpg" alt="Payment QR Code" class="w-full h-full object-contain">
+                        </div>
+
+                        <!-- 5 Minute Timer Below QR Code -->
+                        <div class="flex items-center space-x-2 text-rose-600 font-mono font-bold bg-rose-50 px-3 py-1.5 rounded border border-rose-200">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>Time Remaining: <span id="timerDisplay">05:00</span></span>
+                        </div>
+
+                        <p class="font-medium text-slate-600">Scan the QR code using Google Pay, PhonePe, or Paytm</p>
+                        
+                        <!-- Instruction Note in Official English -->
+                        <p class="text-[11px] text-slate-500 italic max-w-xs leading-relaxed">
+                            Please complete payment before the timer expires. Upon successful payment, your User ID & Password will be displayed automatically.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="pt-6 border-t border-slate-200 mt-6">
+                    <button type="button" onclick="processPayment()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded text-xs transition cursor-pointer flex items-center justify-center space-x-2 shadow-sm active:scale-[0.98]">
+                        <i class="fa-solid fa-lock text-[10px]"></i>
+                        <span>View User ID & Password</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Payment Error Modal (Triggers on View User ID Password Click) -->
+        <div id="paymentErrorModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center px-4">
+            <div class="bg-white p-6 sm:p-7 rounded-xl border border-slate-200 shadow-2xl max-w-md w-full text-center space-y-4">
+                <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Payment Verification Failed</h3>
+                <p class="text-xs text-slate-600 leading-relaxed bg-rose-50 p-3 rounded border border-rose-200">
+                    Payment Not Detected! Please complete the transaction of <strong>₹ 2,705.00</strong> using the provided QR code prior to accessing your User ID and Password. (Note: ₹ 2,455.00 will be automatically refunded within 30 minutes).
+                </p>
+                <button type="button" onclick="closeErrorModal()" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded text-xs transition cursor-pointer shadow-sm">
+                    Dismiss & Complete Payment
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Executive Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-[11px] py-6 px-4 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto text-center space-y-1">
+            <p class="font-semibold text-slate-200">National Recruitment Portal • Financial Gateway Services</p>
+            <p class="text-slate-500">Secured via National Payment Corporation of India (NPCI) protocols</p>
+            <p class="text-[10px] text-slate-500 pt-2">© 2026 Official Recruitment Cell. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Gateway & Timer Logic -->
+    <script>
+        // 5 Minutes Countdown Timer Logic
+        let totalSeconds = 5 * 60;
+        const timerElement = document.getElementById('timerDisplay');
+
+        const countdownInterval = setInterval(() => {
+            let minutes = Math.floor(totalSeconds / 60);
+            let seconds = totalSeconds % 60;
+
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            timerElement.innerText = `${minutes}:${seconds}`;
+
+            if (totalSeconds > 0) {
+                totalSeconds--;
+            } else {
+                clearInterval(countdownInterval);
+                alert("Payment session expired! Please restart your application process.");
+                window.location.href = "index.html";
+            }
+        }, 1000);
+
+        function switchTab(mode) {
+            const alertBox = document.getElementById('gatewayAlert');
+
+            if (mode === 'card' || mode === 'netbanking') {
+                alertBox.classList.remove('hidden');
+                document.getElementById('alertText').innerText = "Selected gateway is currently down for maintenance. Please use UPI / QR Code.";
+                return;
+            } else {
+                alertBox.classList.add('hidden');
+            }
+
+            document.querySelectorAll('.gateway-tab').forEach(tab => {
+                tab.className = "gateway-tab py-3 px-2 rounded border border-slate-200 bg-slate-50 text-slate-600 cursor-pointer transition flex flex-col items-center space-y-1.5 hover:border-slate-300";
+            });
+
+            document.getElementById('tabUpi').className = "gateway-tab active py-3 px-2 rounded border border-emerald-600 bg-emerald-50 text-emerald-800 cursor-pointer transition flex flex-col items-center space-y-1.5 shadow-xs font-semibold";
+        }
+
+        function processPayment() {
+            document.getElementById('paymentErrorModal').classList.remove('hidden');
+        }
+
+        function closeErrorModal() {
+            document.getElementById('paymentErrorModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
